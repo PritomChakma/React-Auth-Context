@@ -1,20 +1,27 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../Shared/AuthProvider";
 import GoogleLogin from "../Shared/GoogleLogin";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
-
+  const { createUser } = useContext(AuthContext);
   const handleRegister = (e) => {
     e.preventDefault();
     const name = e.target.name.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
     console.log("Name:", name, "Email:", email, "Password:", password);
-  };
 
-  
+    createUser(email, password)
+      .then((result) => {
+        console.log(result.user);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -83,7 +90,7 @@ const Register = () => {
         </div>
 
         {/* Google Login */}
-       <GoogleLogin></GoogleLogin>
+        <GoogleLogin></GoogleLogin>
 
         {/* Already have account */}
         <p className="text-center text-sm text-gray-600 mt-4">

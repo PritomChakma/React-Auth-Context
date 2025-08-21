@@ -4,8 +4,8 @@ import { AuthContext } from "../Shared/AuthProvider";
 
 const Navbar = () => {
   const authInfo = useContext(AuthContext);
-  const { name } = authInfo;
-  console.log(name);
+  const { name, email } = authInfo;
+  console.log(name, "&", email);
 
   const Links = (
     <>
