@@ -1,14 +1,15 @@
 import { useContext, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Shared/AuthProvider";
 import GoogleLogin from "../Shared/GoogleLogin";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
   const { signInUser, user } = useContext(AuthContext);
-console.log(user?.email);
+  console.log(user?.email);
   const handleLogin = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
@@ -17,7 +18,9 @@ console.log(user?.email);
 
     signInUser(email, password)
       .then((result) => {
-        e.target.reset()
+        e.target.reset();
+        navigate("/");
+
         console.log(result.user);
       })
       .catch((error) => {

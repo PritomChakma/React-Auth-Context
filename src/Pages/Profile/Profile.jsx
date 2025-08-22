@@ -1,14 +1,17 @@
-import React from "react";
+import { useContext } from "react";
+import { AuthContext } from "../../Components/Shared/AuthProvider";
 
 const Profile = () => {
-  const user = {
-    name: "Pritom Chakma",
-    email: "pritom@example.com",
-    bio: "Frontend Developer | MERN Stack Learner | Tech Enthusiast",
-    location: "Chittagong, Bangladesh",
-    joinDate: "January 2024",
-    image:
-      "https://images.unsplash.com/photo-1502685104226-ee32379fefbe?w=500&auto=format&fit=crop&q=80",
+  const { user, signOutUser } = useContext(AuthContext);
+
+  const handleSignOut = () => {
+    signOutUser()
+      .then(() => {
+        console.log("User Login Sucessfully");
+      })
+      .catch(() => {
+        console.log("User Logout");
+      });
   };
 
   return (
@@ -17,7 +20,7 @@ const Profile = () => {
         {/* Profile Image */}
         <div className="flex flex-col items-center">
           <img
-            src={user.image}
+            src={user.photoURL}
             alt={user.name}
             className="w-32 h-32 rounded-full border-4 border-indigo-500 shadow-md"
           />
@@ -25,20 +28,15 @@ const Profile = () => {
           <p className="text-gray-600">{user.email}</p>
         </div>
 
-        {/* Bio */}
-        <div className="mt-6 text-center">
-          <p className="text-gray-700">{user.bio}</p>
-          <p className="mt-2 text-sm text-gray-500">
-            📍 {user.location} | Joined {user.joinDate}
-          </p>
-        </div>
-
         {/* Buttons */}
         <div className="mt-6 flex justify-center gap-4">
           <button className="px-5 py-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition">
             Edit Profile
           </button>
-          <button className="px-5 py-2 bg-gray-200 text-gray-800 rounded-xl hover:bg-gray-300 transition">
+          <button
+            onClick={handleSignOut}
+            className="px-5 py-2 bg-gray-200 text-gray-800 rounded-xl hover:bg-gray-300 transition"
+          >
             Log Out
           </button>
         </div>
